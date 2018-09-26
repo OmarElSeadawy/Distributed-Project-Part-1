@@ -39,8 +39,7 @@ void Client::DoOperation(string msg, int serverip, int serverport)
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = htonl(serverip);
     server.sin_port = htons(serverport);
-    
-    cout << msg << " " << msg.length() << endl;
+
   if(sendto(sock , msg.c_str(), msg.length(), 0, (sockaddr *) &server , sizeof(struct sockaddr_in)) == -1 )
     {
       cerr << "Sending Failed\n";
@@ -55,8 +54,10 @@ bool Client::CreateSock()
   else
     return 1;
 }
-/*
+
 void Client::GetReply()
 {
-  recvfrom(sock, buffer,BuffSize,0, (sockaddr *) &server , (socklen_t*) sizeof(&server));
-}*/
+    socklen_t x= sizeof(struct sockaddr_in);
+    int amount = recvfrom(sock, buffer,BuffSize,0, (sockaddr *) &server , &x);
+    cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
+}

@@ -12,8 +12,9 @@ class Server{
 private:
 	bool CreateSocket();
 	int sock;
+	int messagelen=0;
 	struct sockaddr_in server;
-	char * buffer;
+	char buffer[BuffSize]="";
 	struct sockaddr_in client;
 public:
 

@@ -15,7 +15,7 @@ bool CreateSock();
 int sock;
 struct sockaddr_in client;
 struct sockaddr_in server;
-char * buffer;
+char buffer[1024]="";
 
 public:
 Client(char * _hostname, int _port);
