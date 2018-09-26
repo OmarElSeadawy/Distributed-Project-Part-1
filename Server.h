@@ -4,7 +4,7 @@
 #include<sys/types.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
-#include<string>
+#include<string.h>
 using namespace std;
 #define  BuffSize 1024
 
@@ -20,7 +20,7 @@ public:
 
 	Server(char * _listen_hostname, int _listen_port);
 	int serverRequest();
-	int serverReply();
+	int serverReply(string);
 	~Server();
 };
 

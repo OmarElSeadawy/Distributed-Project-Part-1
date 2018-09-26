@@ -15,7 +15,11 @@ bool CreateSock();
 int sock;
 struct sockaddr_in client;
 struct sockaddr_in server;
+socklen_t x= sizeof(struct sockaddr_in);
 char buffer[1024]="";
+
+//extern "C" {
+//char * inet_ntoa(struct in_addr);}
 
 public:
 Client(char * _hostname, int _port);

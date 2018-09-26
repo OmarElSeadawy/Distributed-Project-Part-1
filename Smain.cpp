@@ -5,10 +5,10 @@ using namespace std;
 
 int main()
 {
-	Server s1("Mostafa",8080);
+	Server s1("M",1350);
 	//while(!s1.serverRequest())
 	//{}
 	s1.serverRequest();
-	s1.serverReply();
+	//s1.serverReply();
 	return 0;
 }
