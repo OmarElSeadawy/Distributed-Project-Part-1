@@ -61,7 +61,15 @@ bool Client::CreateSock()
 
 void Client::GetReply()
 {
-  cout <<"started get reply" << endl;
+  struct timeval tv;
+  tv.tv_sec = 10;        // 30 Secs Timeout
+  tv.tv_usec = 0;        // Not init'ing this can cause strange errors
+  setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(struct timeval));
+
+  cout <<"Waiting for Reply" << endl;
   int amount = recvfrom(sock, buffer,BuffSize,MSG_WAITALL, (sockaddr *) &server, &x);
-  cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
+  if(amount == -1)
+    cout << "TimeOut\n";
+  else
+    cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
 }
