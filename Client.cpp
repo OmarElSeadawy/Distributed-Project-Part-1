@@ -14,7 +14,6 @@ using namespace std;
 
 Client::Client(char * _hostname, int _port)
 {
-
   //struct hostent* Hostinfo = gethostbyname(_hostname);
 
   //char * IPAdd = inet_ntoa(Hostinfo->h_addr_list[0]);
@@ -32,16 +31,6 @@ Client::Client(char * _hostname, int _port)
   else
     cout << "Socket Created\n";
 
-
-/*
-  if(bind(sock,(sockaddr *) &client, sizeof(client)) < 0)
-    {
-      cerr << ("bind failed\n");
-      return;
-    }
-  else
-    cout << "bind Created\n";
-*/
 }
 Client::~Client()
 {
@@ -61,12 +50,6 @@ void Client::DoOperation(string msg, int serverip, int serverport)
       cerr << "Sending Failed\n";
       return;
     }
-  cout << "Sending Succeded\n";
-  cout <<"started get reply" << endl;
-
-  int amount = recvfrom(sock, buffer,BuffSize,MSG_WAITALL, (sockaddr *) &server, &x);
-  cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
-
 }
 bool Client::CreateSock()
 {
@@ -75,11 +58,10 @@ bool Client::CreateSock()
   else
     return 1;
 }
-/*
+
 void Client::GetReply()
 {
   cout <<"started get reply" << endl;
-  int amount = recvfrom(sock, buffer,BuffSize,0, (sockaddr *) &server, (&x));
+  int amount = recvfrom(sock, buffer,BuffSize,MSG_WAITALL, (sockaddr *) &server, &x);
   cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
 }
-*/

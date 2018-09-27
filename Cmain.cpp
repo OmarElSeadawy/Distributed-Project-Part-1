@@ -13,9 +13,9 @@ using namespace std;
 int main(int argc, char **argv)
 {
 
-  int port = 1350;
+  int port = 1360;
   int clientip=0x0A28234B;
-  int serveripx=0x0A283555;
+  int serveripx=0x0A282852;
 
 
   //struct hostent *hp = gethostbyname(argv[1]);
@@ -30,12 +30,13 @@ int main(int argc, char **argv)
 
   do
   {
-    cin >> msg;
+    getline(cin,msg);
     cli.DoOperation(msg,serveripx,port);
-  }while(msg != "q");
+    if(msg == "q")
+      break;
+    cli.GetReply();
+  }while(true);
 
 
-
-  //cli.GetReply();
   return 0;
 }

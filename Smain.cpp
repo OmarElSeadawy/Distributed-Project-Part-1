@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	Server s1("M",1350);
+	Server s1("M",1360);
 	//while(!s1.serverRequest())
 	//{}
 	s1.serverRequest();

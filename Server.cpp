@@ -10,9 +10,9 @@
 
 Server::Server(char * _listen_hostname, int _listen_port)
 	{
-		
-		memset(&server, 0, sizeof(server)); 
-    		memset(&client, 0, sizeof(client)); 
+
+		memset(&server, 0, sizeof(server));
+  	memset(&client, 0, sizeof(client)); 
 
 		server.sin_family=AF_INET;
 		server.sin_addr.s_addr= htonl(0x0a283555);
@@ -57,7 +57,7 @@ int Server::serverRequest()
 	}
 
 int Server::serverReply(string reply)
-	{	
+	{
 		//int amount=1;
 		//cout << client.sin_port <<" "<< client.sin_addr.s_addr << endl;
 		//cout << reply << " " << reply.length()<< endl;
