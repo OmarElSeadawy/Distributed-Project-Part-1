@@ -9,22 +9,16 @@
 #include<unistd.h>
 using namespace std;
 
-
 int main(int argc, char **argv)
 {
 
-  int port = 1360;
+  int ipaddr = inet_addr(argv[2]);
+
+  char*point;
+  int port = strtol(argv[1],&point,10);
   int clientip=0x0A28234B;
-  int serveripx=0x0A282852;
+  int serveripx=ntohl(ipaddr);
 
-
-  //struct hostent *hp = gethostbyname(argv[1]);
-
-  /*unsigned int i=0;
-  while ( hp -> h_addr_list[i] != NULL) {
-   printf( "%s ", inet_ntoa( *( struct in_addr*)( hp -> h_addr_list[i])));
-   i++;
- }*/
   Client cli("x",port);
   string msg;
 
@@ -34,7 +28,7 @@ int main(int argc, char **argv)
     cli.DoOperation(msg,serveripx,port);
     if(msg == "q")
       break;
-    cli.GetReply();
+    //cli.GetReply();
   }while(true);
 
 

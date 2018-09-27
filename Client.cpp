@@ -10,13 +10,10 @@
 #include<unistd.h>
 using namespace std;
 
-#define BuffSize 1024
+#define BuffSize 50
 
 Client::Client(char * _hostname, int _port)
 {
-  //struct hostent* Hostinfo = gethostbyname(_hostname);
-
-  //char * IPAdd = inet_ntoa(Hostinfo->h_addr_list[0]);
 
   memset(&server, 0, sizeof(server));
   memset(&client, 0, sizeof(client));
@@ -25,7 +22,6 @@ Client::Client(char * _hostname, int _port)
   client.sin_addr.s_addr = htonl(0x0A28234B);
   client.sin_port = htons(_port);
 
-  //cout << htonl(0x0A28234B) << " " << htons(_port) << endl;
   if(!CreateSock())
     cerr << ("socket failed");
   else
@@ -50,6 +46,7 @@ void Client::DoOperation(string msg, int serverip, int serverport)
       cerr << "Sending Failed\n";
       return;
     }
+    GetReply(msg.length());
 }
 bool Client::CreateSock()
 {
@@ -59,7 +56,7 @@ bool Client::CreateSock()
     return 1;
 }
 
-void Client::GetReply()
+void Client::GetReply(int l)
 {
   struct timeval tv;
   tv.tv_sec = 10;        // 30 Secs Timeout
@@ -71,5 +68,9 @@ void Client::GetReply()
   if(amount == -1)
     cout << "TimeOut\n";
   else
+  {
+    if(l != amount)
+      cout << "Message is Incomplete\n";
     cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
+  }
 }

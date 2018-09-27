@@ -23,7 +23,7 @@ char buffer[1024]="";
 
 public:
 Client(char * _hostname, int _port);
-void GetReply();
+void GetReply(int);
 void DoOperation(string ,int , int);
 ~Client();
 };

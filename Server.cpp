@@ -45,12 +45,23 @@ int Server::serverRequest()
     {
         socklen_t x= sizeof(struct sockaddr_in);
         int amount=0;
+        struct timeval tv;
+          tv.tv_sec = 90;        // 30 Secs Timeout
+          tv.tv_usec = 0;        // Not init'ing this can cause strange error
+
 
         client.sin_family=AF_INET;
         while(true)
             {
+                setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(struct timeval));
                 amount=recvfrom(sock,buffer,BuffSize,MSG_WAITALL, (sockaddr *) &client, (&x));
-                cout << "Size of message: " << amount << " Message: " << buffer << endl;
+                if(amount==-1)
+                    {
+                        cout <<"Timeout\n";
+                        break;
+                    }
+                else
+                    cout << "Size of message: " << amount << " Message: " << buffer << endl;
                 if((amount==1)&&(buffer[0]=='q'))
                     break;
                 messagelen=amount;
@@ -60,12 +71,8 @@ int Server::serverRequest()
             }
         return amount;
     }
-
 int Server::serverReply(string reply)
     {
-        //int amount=1;
-        //cout << client.sin_port <<" "<< client.sin_addr.s_addr << endl;
-        //cout << reply << " " << reply.length()<< endl;
         if(sendto(sock,reply.c_str(),reply.length(),MSG_CONFIRM,(sockaddr *) &client, sizeof(client))==-1)
         {
             cerr<<"Reply failed\n";
@@ -73,7 +80,6 @@ int Server::serverReply(string reply)
         }
         else
         {
-            //cout << amount << endl;
             cout << "Reply succeeded\n";
             return 1;
         }
