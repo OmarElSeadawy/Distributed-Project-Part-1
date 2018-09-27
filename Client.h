@@ -15,6 +15,7 @@ bool CreateSock();
 int sock;
 struct sockaddr_in client;
 struct sockaddr_in server;
+int counter=0;
 socklen_t x= sizeof(struct sockaddr_in);
 char buffer[1024]="";
 
@@ -23,8 +24,8 @@ char buffer[1024]="";
 
 public:
 Client(char * _hostname, int _port);
-void GetReply(int);
-void DoOperation(string ,int , int);
+int GetReply(int);
+int DoOperation(string ,int , int);
 ~Client();
 };
 #endif // CLIENT_H

@@ -10,7 +10,7 @@
 #include<unistd.h>
 using namespace std;
 
-#define BuffSize 50
+#define BuffSize 1024
 
 Client::Client(char * _hostname, int _port)
 {
@@ -19,7 +19,7 @@ Client::Client(char * _hostname, int _port)
   memset(&client, 0, sizeof(client));
 
   client.sin_family = AF_INET;
-  client.sin_addr.s_addr = htonl(0x0A28234B);
+  client.sin_addr.s_addr = htonl(0x0a00020f);
   client.sin_port = htons(_port);
 
   if(!CreateSock())
@@ -33,7 +33,7 @@ Client::~Client()
   //close(sock);
 }
 
-void Client::DoOperation(string msg, int serverip, int serverport)
+int Client::DoOperation(string msg, int serverip, int serverport)
 {
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = htonl(serverip);
@@ -44,10 +44,11 @@ void Client::DoOperation(string msg, int serverip, int serverport)
   if(sendto(sock , msg.c_str(), msg.length(), MSG_CONFIRM, (sockaddr *) &server , sizeof(struct sockaddr_in)) == -1 )
     {
       cerr << "Sending Failed\n";
-      return;
+      return 0;
     }
-    GetReply(msg.length());
+    return GetReply(msg.length());
 }
+
 bool Client::CreateSock()
 {
   if(( sock = socket(AF_INET, SOCK_DGRAM, 0))<0)
@@ -56,7 +57,7 @@ bool Client::CreateSock()
     return 1;
 }
 
-void Client::GetReply(int l)
+int Client::GetReply(int l)
 {
   struct timeval tv;
   tv.tv_sec = 10;        // 30 Secs Timeout
@@ -64,13 +65,19 @@ void Client::GetReply(int l)
   setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(struct timeval));
 
   cout <<"Waiting for Reply" << endl;
+  memset(buffer,NULL,BuffSize); 
   int amount = recvfrom(sock, buffer,BuffSize,MSG_WAITALL, (sockaddr *) &server, &x);
-  if(amount == -1)
+  if(amount == -1){
     cout << "TimeOut\n";
+    counter++;
+  }
   else
   {
     if(l != amount)
       cout << "Message is Incomplete\n";
     cout << "Size of Reply: " << amount << " Reply from server: " << buffer << endl;
+
+    counter=0;
   }
+  return counter;
 }

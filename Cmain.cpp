@@ -18,16 +18,18 @@ int main(int argc, char **argv)
   int port = strtol(argv[1],&point,10);
   int clientip=0x0A28234B;
   int serveripx=ntohl(ipaddr);
-
+  int count;
   Client cli("x",port);
   string msg;
 
   do
   {
     getline(cin,msg);
-    cli.DoOperation(msg,serveripx,port);
+    count=cli.DoOperation(msg,serveripx,port);
     if(msg == "q")
       break;
+    else if(count>2)
+      break;  
     //cli.GetReply();
   }while(true);
 
