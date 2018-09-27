@@ -13,8 +13,9 @@ private:
 	bool CreateSocket();
 	int sock;
 	int messagelen=0;
-	struct sockaddr_in server;
 	char buffer[BuffSize]="";
+
+	struct sockaddr_in server;
 	struct sockaddr_in client;
 public:
 

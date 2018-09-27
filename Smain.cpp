@@ -12,6 +12,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+	//Translation from terminal functions
 	char*point;
 	int port =  strtol(argv[1],&point,10);
 	int ipaddrserver = inet_addr(argv[2]);
