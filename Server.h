@@ -4,23 +4,23 @@
 #include<sys/types.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
-#include<string>
+#include<string.h>
 using namespace std;
-#define BuffSize 1024
+#define  BuffSize 1024
 
 class Server{
 private:
-	int sockfd,newsockfd,portno,clilen n;
-	bool CreateSocket(int&);
+	bool CreateSocket();
 	int sock;
+	int messagelen=0;
 	struct sockaddr_in server;
-	char * buffer;
+	char buffer[BuffSize]="";
 	struct sockaddr_in client;
 public:
 
-	Server(char * _listen_hostname, int _listen_port);
-	int serverRequest(int s);
-	int serverReply();
+	Server(char * _listen_hostname,int serverip,int _listen_port);
+	int serverRequest();
+	int serverReply(string);
 	~Server();
 };
 

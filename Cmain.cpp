@@ -12,25 +12,23 @@ using namespace std;
 int main(int argc, char **argv)
 {
 
-  int ipaddr = inet_addr(argv[2]);
+  int ipaddrserver = inet_addr(argv[2]);
+  int ipaddrclient = inet_addr(argv[3]);
 
   char*point;
   int port = strtol(argv[1],&point,10);
-  int clientip=0x0A28234B;
-  int serveripx=ntohl(ipaddr);
   int count;
-  Client cli("Not Working",port);
+  Client cli("Not Working",ntohl(ipaddrclient),port);
   string msg;
 
   do
   {
     getline(cin,msg);
-    count=cli.DoOperation(msg,serveripx,port);
+    count=cli.DoOperation(msg,ntohl(ipaddrserver),port);
     if(msg == "q")
       break;
     else if(count>2)
       break;
-    //cli.GetReply();
   }while(true);
 
 

@@ -12,14 +12,14 @@ using namespace std;
 
 #define BuffSize 1024
 
-Client::Client(char * _hostname, int _port)
+Client::Client(char * _hostname,int clientip, int _port)
 {
 
   memset(&server, 0, sizeof(server));
   memset(&client, 0, sizeof(client));
 
   client.sin_family = AF_INET;
-  client.sin_addr.s_addr = htonl(0x0a00020f);
+  client.sin_addr.s_addr = htonl(clientip);
   client.sin_port = htons(_port);
 
   if(!CreateSock())
