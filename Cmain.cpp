@@ -19,7 +19,7 @@ int main(int argc, char **argv)
   int clientip=0x0A28234B;
   int serveripx=ntohl(ipaddr);
   int count;
-  Client cli("x",port);
+  Client cli("Not Working",port);
   string msg;
 
   do
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     if(msg == "q")
       break;
     else if(count>2)
-      break;  
+      break;
     //cli.GetReply();
   }while(true);
 

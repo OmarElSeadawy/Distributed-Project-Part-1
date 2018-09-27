@@ -46,6 +46,7 @@ int Client::DoOperation(string msg, int serverip, int serverport)
       cerr << "Sending Failed\n";
       return 0;
     }
+    cout << "Sending Succeeded\n";
     return GetReply(msg.length());
 }
 
@@ -65,7 +66,7 @@ int Client::GetReply(int l)
   setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(struct timeval));
 
   cout <<"Waiting for Reply" << endl;
-  memset(buffer,NULL,BuffSize); 
+  memset(buffer,NULL,BuffSize);
   int amount = recvfrom(sock, buffer,BuffSize,MSG_WAITALL, (sockaddr *) &server, &x);
   if(amount == -1){
     cout << "TimeOut\n";

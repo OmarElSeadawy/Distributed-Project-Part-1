@@ -13,7 +13,7 @@ Server::Server(char * _listen_hostname, int _listen_port)
 		server.sin_port=htons(_listen_port);
 		if(!CreateSocket(sock))
 			cerr<<"socket failed\n";
-		else 
+		else
 			cout<<"socket created\n";
 
 		if(bind(sock,(SOCKADDR *) &server, sizeof(server)) <0)
@@ -21,7 +21,7 @@ Server::Server(char * _listen_hostname, int _listen_port)
 				cerr<<"bind failed\n";
 				return 1;
 			}
-		
+
 	}
 
 bool Server::CreateSocket()
@@ -40,12 +40,15 @@ int Server::serverReply()
 		if(sendto(s,buffer,BuffSize,0,(SOCKADDR *) &client, sizeof(client))<0)
 		{
 			cerr<<"sending failed\n";
-			return 0; 	
+			return 0;
 		}
 		else
-			return 1;	
+		{
+			cout << "Sending Succeeded\n";
+			return 1;
+		}
 	}
 Server::~Server()
 	{
-		closesocket(sock);
+		close(sock);
 	}
